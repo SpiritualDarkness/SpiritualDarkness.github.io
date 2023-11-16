@@ -4,7 +4,7 @@ on:
   push:
     # Update branch according from where you will be pushing the code
     branches: [ master ]
-
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
