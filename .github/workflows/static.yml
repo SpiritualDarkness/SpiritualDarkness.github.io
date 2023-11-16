@@ -1,43 +1,50 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
-
+name: Deploy to GitHub Pages
+# https://www.immadisairaj.dev/blog/2022/github-actions-for-flutter-web/
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ["master"]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+    # Update branch according from where you will be pushing the code
+    branches: [ master ]
 
 jobs:
-  # Single deploy job since we're just deploying
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
+    env:
+      my_secret: ${{secrets.FLUTTERBUILD}}
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
         with:
-          # Upload entire repository
-          path: '.'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+          channel: 'stable'
+
+      - run: flutter clean
+      - run: flutter pub get
+      - run: flutter build web --release
+
+      # Web deploy now is contained in build/web directory
+      - run: |
+          cd build
+          mkdir web-deploy
+          cd web-deploy
+          #! Update with your Email ID associated with GitHub
+          git config --global user.email megumin_lyq@outlook.com
+          #! Update with your username associated with GitHub
+          git config --global user.name MeguminLYQ
+          git config --global init.defaultBranch master
+          git init
+          # the repository to push the deploy into
+          #! Update the following with your username and repository
+          git remote add origin https://${{secrets.FLUTTERBUILD}}@github.com/SpiritualDarkness/SpiritualDarkness.github.io.git
+          git fetch origin gh-pages
+          git switch gh-pages
+          # copy the build that is there in ROOT/build/web into ROOT/build/web-deploy
+          cp -R ../web/* .
+          git status
+          git add .
+          # add commit of the previous commit from main
+          echo ""
+          echo "Committing to gh-pages: ${{ github.event.head_commit.message }}"
+          echo ""
+          git commit -m "${{ github.event.head_commit.message }}"
+          git push origin gh-pages
+          
