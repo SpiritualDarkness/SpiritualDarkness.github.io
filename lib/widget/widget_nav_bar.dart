@@ -4,9 +4,16 @@ import 'package:home_page/data/data_nav_item.dart';
 class WNavBar extends StatefulWidget {
   List<FNavItem> navItems = <FNavItem>[
     FNavItem.create("介绍", Icon(Icons.home), Icon(Icons.home_outlined)),
-    FNavItem.create("阅读", Icon(Icons.collections_bookmark),
-        Icon(Icons.collections_bookmark_outlined))
+    FNavItem.create("阅读", Icon(Icons.book), Icon(Icons.book_outlined)),
+    FNavItem.create("文章", Icon(Icons.collections_bookmark),
+        Icon(Icons.collections_bookmark_outlined)),
+    FNavItem.create("视频", Icon(Icons.tv), Icon(Icons.tv_outlined)),
+    FNavItem.create("软件", Icon(Icons.apps), Icon(Icons.apps_outage)),
+    //这里的需要添加到Footer
+    FNavItem.create("许可证", Icon(Icons.balance), Icon(Icons.balance_outlined)),
+    FNavItem.placholder("团队介绍"),
   ];
+
   WNavBarState navBarState = WNavBarState();
 
   @override
@@ -53,7 +60,15 @@ class WNavBarState extends State<WNavBar> {
             icon: data.icon,
             label: Text(data.title),
           );
-        })
+        }),
+        Container(
+          color: colorScheme.inversePrimary,
+          height: 5,
+          width: 10,
+          margin: EdgeInsets.fromLTRB(20, 200, 20, 20),
+        ),
+        NavigationDrawerDestination(
+            icon: Icon(Icons.question_mark), label: Text("Bottom"))
       ],
     ));
   }
