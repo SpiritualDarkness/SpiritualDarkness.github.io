@@ -58254,7 +58254,7 @@ A.JT.prototype={
 qQ(){var s=0,r=A.T(t.N),q
 var $async$qQ=A.U(function(a,b){if(a===1)return A.Q(b,r)
 while(true)switch(s){case 0:s=3
-return A.W($.K0().a_h("./resource/book_list/tmp.csv"),$async$qQ)
+return A.W($.K0().a_h("resource/book_list/tmp.csv"),$async$qQ)
 case 3:q=b
 s=1
 break
