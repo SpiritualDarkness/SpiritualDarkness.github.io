@@ -5,5 +5,5 @@
 class AssetsRes {
   static const String PLUGIN_NAME = 'home_page';
   static const String PLUGIN_VERSION = '1.0.0+1';
-  static const String TMP = 'assets/booklist/tmp.csv';
+  static const String TMP = 'assets/book_list/tmp.csv';
 }
