@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/test/testCSV.dart';
 import 'package:home_page/widget/widget_nav_bar.dart';
 
 void main() {
@@ -47,7 +48,9 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: WNavBar(),
+      body: Row(
+        children: [WNavBar(), testwidget()],
+      ),
     );
   }
 }
