@@ -36,12 +36,10 @@ class WNavBarState extends State<WNavBar> {
     if (navItemData.isEmpty) {
       throw '导航栏数据为空';
     }
-
     return SafeArea(
         child: NavigationDrawer(
       backgroundColor: colorScheme.primaryContainer,
-      surfaceTintColor: colorScheme.onPrimary,
-      indicatorColor: colorScheme.onPrimary,
+      indicatorColor: colorScheme.inversePrimary,
       children: <Widget>[
         Padding(
           padding: EdgeInsets.fromLTRB(28, 16, 16, 10),
