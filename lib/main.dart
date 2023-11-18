@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:home_page/page/widget_nav_bar.dart';
 import 'package:home_page/test/testCSV.dart';
-import 'package:home_page/widget/widget_nav_bar.dart';
 
 void main() {
   runApp(const MyApp());

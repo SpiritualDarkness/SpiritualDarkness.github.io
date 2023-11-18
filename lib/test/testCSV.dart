@@ -15,7 +15,14 @@ class testwidget extends StatelessWidget {
         if (snapshot.hasData) {
           text = snapshot.data!;
         }
-        return Text(text);
+        return SizedBox(
+          width: 500,
+          height: 2000,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [Text(text), Spacer(), Text(text)],
+          ),
+        );
       },
     );
   }

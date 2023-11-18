@@ -2,23 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:home_page/data/data_nav_item.dart';
 
 class WNavBar extends StatefulWidget {
-  List<FNavItem> navItems = <FNavItem>[
+  List<FNavItem> topNavItems = <FNavItem>[
     FNavItem.create("介绍", Icon(Icons.home), Icon(Icons.home_outlined)),
     FNavItem.create("阅读", Icon(Icons.book), Icon(Icons.book_outlined)),
     FNavItem.create("文章", Icon(Icons.collections_bookmark),
         Icon(Icons.collections_bookmark_outlined)),
     FNavItem.create("视频", Icon(Icons.tv), Icon(Icons.tv_outlined)),
     FNavItem.create("软件", Icon(Icons.apps), Icon(Icons.apps_outage)),
-    //这里的需要添加到Footer
+  ];
+
+  List<FNavItem> bottomNavItems = <FNavItem>[
     FNavItem.create("许可证", Icon(Icons.balance), Icon(Icons.balance_outlined)),
-    FNavItem.placholder("团队介绍"),
+    FNavItem.create("团队介绍", Icon(Icons.people), Icon(Icons.people_outline)),
   ];
 
   WNavBarState navBarState = WNavBarState();
 
   @override
   State<StatefulWidget> createState() {
-    navBarState.setData(navItems);
+    navBarState.setData(topNavItems, bottomNavItems);
 
     return navBarState;
   }
@@ -28,10 +30,20 @@ class WNavBarState extends State<WNavBar> {
   late TextTheme textTheme;
   late ThemeData themeData;
   late ColorScheme colorScheme;
-  late final List<FNavItem> navItemData;
+  late final List<FNavItem> topNavItemData;
+  late final List<FNavItem> bottomNavItemData;
 
-  void setData(List<FNavItem> items) {
-    navItemData = items;
+  int selectionIndex = 0;
+
+  void handleScreenChange(int selectedIndex) {
+    setState(() {
+      selectionIndex = selectedIndex;
+    });
+  }
+
+  void setData(List<FNavItem> items, List<FNavItem> bottomNavItems) {
+    topNavItemData = items;
+    bottomNavItemData = bottomNavItems;
   }
 
   @override
@@ -40,12 +52,14 @@ class WNavBarState extends State<WNavBar> {
     textTheme = themeData.textTheme;
     colorScheme = themeData.colorScheme;
 
-    if (navItemData.isEmpty) {
+    if (topNavItemData.isEmpty) {
       throw '导航栏数据为空';
     }
     return SafeArea(
         child: NavigationDrawer(
       backgroundColor: colorScheme.primaryContainer,
+      onDestinationSelected: handleScreenChange,
+      selectedIndex: selectionIndex,
       indicatorColor: colorScheme.inversePrimary,
       children: <Widget>[
         Padding(
@@ -55,7 +69,7 @@ class WNavBarState extends State<WNavBar> {
             style: textTheme.titleSmall,
           ),
         ),
-        ...navItemData.map((var data) {
+        ...topNavItemData.map((var data) {
           return NavigationDrawerDestination(
             icon: data.icon,
             label: Text(data.title),
@@ -65,10 +79,14 @@ class WNavBarState extends State<WNavBar> {
           color: colorScheme.inversePrimary,
           height: 5,
           width: 10,
-          margin: EdgeInsets.fromLTRB(20, 200, 20, 20),
+          margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
         ),
-        NavigationDrawerDestination(
-            icon: Icon(Icons.question_mark), label: Text("Bottom"))
+        ...bottomNavItemData.map((var data) {
+          return NavigationDrawerDestination(
+            icon: data.icon,
+            label: Text(data.title),
+          );
+        }),
       ],
     ));
   }
