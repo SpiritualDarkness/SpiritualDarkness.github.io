@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:home_page/page/widget_nav_bar.dart';
+import 'package:home_page/navigator/nav_global_navigator.dart';
+import 'package:home_page/page/page_video_page.dart';
 import 'package:home_page/test/testCSV.dart';
 
 void main() {
@@ -13,28 +14,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: '心灵黑暗研究所',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.black, brightness: Brightness.dark),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: '主页'),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -43,13 +35,36 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  var globalNavigator = WGlobalNavigator();
+  int selectedIndex = 0;
+
+  void updateIndex(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    globalNavigator.setOnValueChanged(updateIndex);
+    print(selectedIndex);
+    Widget page;
+    switch (selectedIndex) {
+      case 0:
+        page = WVideoPage();
+        break;
+      case 1:
+        page = testwidget();
+      default:
+        page = Placeholder();
+        break;
+    }
+
     return Scaffold(
       body: Row(
-        children: [WNavBar(), testwidget()],
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
+        children: [globalNavigator, page],
       ),
     );
   }

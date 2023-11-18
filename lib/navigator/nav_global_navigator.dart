@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:home_page/data/data_nav_item.dart';
 
-class WNavBar extends StatefulWidget {
-  List<FNavItem> topNavItems = <FNavItem>[
+class WGlobalNavigator extends StatefulWidget {
+  final List<FNavItem> _topNavItems = <FNavItem>[
     FNavItem.create("介绍", Icon(Icons.home), Icon(Icons.home_outlined)),
     FNavItem.create("阅读", Icon(Icons.book), Icon(Icons.book_outlined)),
     FNavItem.create("文章", Icon(Icons.collections_bookmark),
@@ -11,33 +11,38 @@ class WNavBar extends StatefulWidget {
     FNavItem.create("软件", Icon(Icons.apps), Icon(Icons.apps_outage)),
   ];
 
-  List<FNavItem> bottomNavItems = <FNavItem>[
+  final List<FNavItem> _bottomNavItems = <FNavItem>[
     FNavItem.create("许可证", Icon(Icons.balance), Icon(Icons.balance_outlined)),
     FNavItem.create("团队介绍", Icon(Icons.people), Icon(Icons.people_outline)),
   ];
 
-  WNavBarState navBarState = WNavBarState();
+  FGlobalNavigatorState navBarState = FGlobalNavigatorState();
+
+  void setOnValueChanged(ValueChanged<int> t) {
+    navBarState.onValueChanged = t;
+  }
 
   @override
   State<StatefulWidget> createState() {
-    navBarState.setData(topNavItems, bottomNavItems);
-
+    navBarState.setData(_topNavItems, _bottomNavItems);
     return navBarState;
   }
 }
 
-class WNavBarState extends State<WNavBar> {
+class FGlobalNavigatorState extends State<WGlobalNavigator> {
   late TextTheme textTheme;
   late ThemeData themeData;
   late ColorScheme colorScheme;
   late final List<FNavItem> topNavItemData;
   late final List<FNavItem> bottomNavItemData;
-
+  late ValueChanged<int> onValueChanged;
   int selectionIndex = 0;
 
   void handleScreenChange(int selectedIndex) {
     setState(() {
       selectionIndex = selectedIndex;
+      onValueChanged(selectedIndex);
+      print("new index$selectionIndex");
     });
   }
 
