@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:home_page/navigator/nav_global_navigator.dart';
 import 'package:home_page/page/page_video_page.dart';
 import 'package:home_page/test/testCSV.dart';
+import 'package:home_page/widget/navigator/nav_global_navigator.dart';
 
 void main() {
   runApp(const MyApp());
@@ -47,7 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     globalNavigator.setOnValueChanged(updateIndex);
-    print(selectedIndex);
     Widget page;
     switch (selectedIndex) {
       case 0:

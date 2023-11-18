@@ -8,7 +8,7 @@ class WGlobalNavigator extends StatefulWidget {
     FNavItem.create("文章", Icon(Icons.collections_bookmark),
         Icon(Icons.collections_bookmark_outlined)),
     FNavItem.create("视频", Icon(Icons.tv), Icon(Icons.tv_outlined)),
-    FNavItem.create("软件", Icon(Icons.apps), Icon(Icons.apps_outage)),
+    FNavItem.create("软件", Icon(Icons.apps), Icon(Icons.apps_outlined)),
   ];
 
   final List<FNavItem> _bottomNavItems = <FNavItem>[
@@ -42,7 +42,6 @@ class FGlobalNavigatorState extends State<WGlobalNavigator> {
     setState(() {
       selectionIndex = selectedIndex;
       onValueChanged(selectedIndex);
-      print("new index$selectionIndex");
     });
   }
 
@@ -77,6 +76,7 @@ class FGlobalNavigatorState extends State<WGlobalNavigator> {
         ...topNavItemData.map((var data) {
           return NavigationDrawerDestination(
             icon: data.icon,
+            selectedIcon: data.selected,
             label: Text(data.title),
           );
         }),
@@ -89,6 +89,7 @@ class FGlobalNavigatorState extends State<WGlobalNavigator> {
         ...bottomNavItemData.map((var data) {
           return NavigationDrawerDestination(
             icon: data.icon,
+            selectedIcon: data.selected,
             label: Text(data.title),
           );
         }),
