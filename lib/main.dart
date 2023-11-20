@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:home_page/page/page_video_page.dart';
 import 'package:home_page/test/testCSV.dart';
+import 'package:home_page/test/testDropdown.dart';
 import 'package:home_page/widget/navigator/nav_global_navigator.dart';
 
 void main() {
@@ -54,6 +55,10 @@ class _MyHomePageState extends State<MyHomePage> {
         break;
       case 1:
         page = testwidget();
+        break;
+      case 2:
+        page = WTestDropdown();
+        break;
       default:
         page = Placeholder();
         break;
